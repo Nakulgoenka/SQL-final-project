@@ -1,0 +1,31 @@
+ select * from survey
+ limit 10;
+ 
+ ANSWER.......
+ question	                      user_id                            	response
+1. What are you looking for?	  005e7f99-d48c-4fce-b605-10506c85aaf7	Women's Styles
+2. What's your fit?          	  005e7f99-d48c-4fce-b605-10506c85aaf7	Medium
+3. Which shapes do you like?	  00a556ed-f13e-4c67-8704-27e3573684cd	Round
+4. Which colors do you like?	  00a556ed-f13e-4c67-8704-27e3573684cd	Two-Tone
+1. What are you looking for?	  00a556ed-f13e-4c67-8704-27e3573684cd	I'm not sure. Let's skip it.
+2. What's your fit?	            00a556ed-f13e-4c67-8704-27e3573684cd	Narrow
+5. When was your last eye exam?	00a556ed-f13e-4c67-8704-27e3573684cd	<1 Year
+3. Which shapes do you like?	  00bf9d63-0999-43a3-9e5b-9c372e6890d2	Square
+5. When was your last eye exam?	00bf9d63-0999-43a3-9e5b-9c372e6890d2	<1 Year
+2. What's your fit?	            00bf9d63-0999-43a3-9e5b-9c372e6890d2	Medium
+
+
+FURTHER CODE........
+select question, count(distinct user_id),
+(count(distinct user_id)/500.0)*100 as 'percentage' from survey
+group by question;
+
+select distinct q.user_id, 
+h.user_id is not null as 'is home try on', 
+h.number_of_pairs, p.user_id is not null as 'is purchase'
+from quiz q
+left join home_try_on h 
+on q.user_id = h.user_id
+left join purchase p
+on p.user_id = q.user_id
+limit 10;
